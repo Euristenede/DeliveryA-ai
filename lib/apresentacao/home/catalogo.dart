@@ -3,6 +3,7 @@ import 'package:appacai/informacoes/funcionamento.dart';
 import 'package:appacai/informacoes/locais_entrega.dart';
 import 'package:appacai/informacoes/formas_pagamento.dart';
 import 'package:appacai/informacoes/taxa_entrega.dart';
+import 'package:appacai/pedidos/acompanhamento_pedido.dart';
 
 class Catalogo extends StatefulWidget {
   @override
@@ -19,7 +20,7 @@ class _CatalogoState extends State<Catalogo> {
   );
 
   final TextStyle estilo = new TextStyle(
-      color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold);
+      color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold);
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +66,6 @@ class _CatalogoState extends State<Catalogo> {
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(Icons.location_on_outlined),
                                         Text(
                                           "  Funcionamento",
                                           style: estilo,
@@ -94,7 +94,6 @@ class _CatalogoState extends State<Catalogo> {
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(Icons.location_on_outlined),
                                         Text(
                                           "  Locais de entrega",
                                           style: estilo,
@@ -123,7 +122,6 @@ class _CatalogoState extends State<Catalogo> {
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(Icons.location_on_outlined),
                                         Text(
                                           "  Formas de pagamento",
                                           style: estilo,
@@ -152,7 +150,6 @@ class _CatalogoState extends State<Catalogo> {
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(Icons.location_on_outlined),
                                         Text(
                                           "  Taxa de entrega",
                                           style: estilo,
@@ -181,7 +178,6 @@ class _CatalogoState extends State<Catalogo> {
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(Icons.location_on_outlined),
                                         Text(
                                           "  Status dos Pedidos",
                                           style: estilo,
@@ -299,24 +295,187 @@ class _CatalogoState extends State<Catalogo> {
                   ),
                   Container(
                       margin: const EdgeInsets.only(top: 20),
+                      padding: EdgeInsets.all(4),
+                      width: double.infinity,
                       child: Column(
                         children: [
                           GestureDetector(
-                            // When the child is tapped, show a snackbar.
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        AcompanhamentoEntrega())),
+                            child: Container(
+                              child: Column(
+                                children: [
+                                  Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    color: Colors.purple[50],
+                                    elevation: 10,
+                                    child: Container(
+                                      padding: EdgeInsets.all(4.0),
+                                      width: double.infinity,
+                                      child: Row(
+                                        children: [
+                                          Column(
+                                            children: <Widget>[
+                                              Image.asset(
+                                                "assets/images/acai_copo.png",
+                                                height: 50,
+                                                width: 70,
+                                              )
+                                            ],
+                                          ),
+                                          Column(
+                                            children: <Widget>[
+                                              Text('Açaí 150 ml'),
+                                              Text('Banana e Leite Condensado'),
+                                              Text(r'R$ 5,00')
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
                             onTap: () {
                               const snackBar = SnackBar(content: Text('Tap'));
 
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
                             },
-                            // The custom button
                             child: Container(
-                              padding: const EdgeInsets.all(12.0),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).buttonColor,
-                                borderRadius: BorderRadius.circular(8.0),
+                              child: Column(
+                                children: [
+                                  Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    color: Colors.purple[50],
+                                    elevation: 10,
+                                    child: Container(
+                                      padding: EdgeInsets.all(4.0),
+                                      width: double.infinity,
+                                      child: Row(
+                                        children: [
+                                          Column(
+                                            children: <Widget>[
+                                              Image.asset(
+                                                "assets/images/acai_copo.png",
+                                                height: 50,
+                                                width: 70,
+                                              )
+                                            ],
+                                          ),
+                                          Column(
+                                            children: <Widget>[
+                                              Text('Açaí 150 ml'),
+                                              Text('Banana e Leite Condensado'),
+                                              Text(r'R$ 5,00')
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              child: const Text('My Button'),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              const snackBar = SnackBar(content: Text('Tap'));
+
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            },
+                            child: Container(
+                              child: Column(
+                                children: [
+                                  Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    color: Colors.purple[50],
+                                    elevation: 10,
+                                    child: Container(
+                                      padding: EdgeInsets.all(4.0),
+                                      width: double.infinity,
+                                      child: Row(
+                                        children: [
+                                          Column(
+                                            children: <Widget>[
+                                              Image.asset(
+                                                "assets/images/acai_copo.png",
+                                                height: 50,
+                                                width: 70,
+                                              )
+                                            ],
+                                          ),
+                                          Column(
+                                            children: <Widget>[
+                                              Text('Açaí 150 ml'),
+                                              Text('Banana e Leite Condensado'),
+                                              Text(r'R$ 5,00')
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              const snackBar = SnackBar(content: Text('Tap'));
+
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            },
+                            child: Container(
+                              child: Column(
+                                children: [
+                                  Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    color: Colors.purple[50],
+                                    elevation: 10,
+                                    child: Container(
+                                      padding: EdgeInsets.all(4.0),
+                                      width: double.infinity,
+                                      child: Row(
+                                        children: [
+                                          Column(
+                                            children: <Widget>[
+                                              Image.asset(
+                                                "assets/images/acai_copo.png",
+                                                height: 50,
+                                                width: 70,
+                                              )
+                                            ],
+                                          ),
+                                          Column(
+                                            children: <Widget>[
+                                              Text('Açaí 150 ml'),
+                                              Text('Banana e Leite Condensado'),
+                                              Text(r'R$ 5,00')
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           )
                         ],
