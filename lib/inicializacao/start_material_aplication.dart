@@ -1,4 +1,4 @@
-import 'package:appacai/autenticacao/registro.dart';
+import 'package:appacai/apresentacao/home/catalogo.dart';
 import 'package:flutter/material.dart';
 
 class StartMaterialAplication extends StatelessWidget {
@@ -7,7 +7,7 @@ class StartMaterialAplication extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.deepPurple),
-      home: Registro(),
+      home: Catalogo(),
     );
   }
 }
