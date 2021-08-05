@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:appacai/pedidos/adicionais_pedidos.dart';
+import 'package:appacai/pedidos/confirmar_pedido.dart';
 
 class CaldaFruta extends StatefulWidget {
   @override
@@ -428,7 +429,8 @@ class _CaldaFrutaState extends State<CaldaFruta> {
               ),
               TextButton(
                 style: flatButtonStyle,
-                onPressed: null,
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ConfirmaPedido())),
                 child: Row(
                   children: [
                     Text(

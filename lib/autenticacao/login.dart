@@ -1,3 +1,4 @@
+import 'package:appacai/apresentacao/home/catalogo.dart';
 import 'package:appacai/autenticacao/registro.dart';
 import 'package:flutter/material.dart';
 
@@ -41,39 +42,40 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 Container(
+                    padding: EdgeInsets.only(left: 10, right: 10),
                     child: Column(
-                  children: [
-                    TextFormField(
-                      style: inputStyle,
-                      decoration: const InputDecoration(
-                          hintText: 'Seu email',
-                          hintStyle: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Por favor insira um email';
-                        }
-                        return null;
-                      },
-                    ),
-                    Divider(),
-                    TextFormField(
-                      style: inputStyle,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        hintText: 'Sua Senha',
-                        hintStyle: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Por favor, insira uma senha';
-                        }
-                        return null;
-                      },
-                    ),
-                  ],
-                )),
+                      children: [
+                        TextFormField(
+                          style: inputStyle,
+                          decoration: const InputDecoration(
+                              hintText: 'Seu email',
+                              hintStyle: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor insira um email';
+                            }
+                            return null;
+                          },
+                        ),
+                        Divider(),
+                        TextFormField(
+                          style: inputStyle,
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            hintText: 'Sua Senha',
+                            hintStyle: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor, insira uma senha';
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    )),
                 Container(
                   padding: EdgeInsets.only(top: 30),
                   child: Row(
@@ -95,9 +97,12 @@ class Login extends StatelessWidget {
                       ),
                       TextButton(
                         style: flatButtonStyle,
-                        onPressed: null,
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Catalogo())),
                         child: Text(
-                          "Logar",
+                          "Entrar",
                           style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,

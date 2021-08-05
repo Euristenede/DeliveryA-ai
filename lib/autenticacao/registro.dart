@@ -41,69 +41,70 @@ class Registro extends StatelessWidget {
                   ),
                 ),
                 Container(
+                    padding: EdgeInsets.only(left: 10, right: 10),
                     child: Column(
-                  children: [
-                    TextFormField(
-                      style: inputStyle,
-                      decoration: const InputDecoration(
-                          hintText: 'Seu Nome',
-                          hintStyle: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Por favor insira um nome';
-                        }
-                        return null;
-                      },
-                    ),
-                    Divider(),
-                    TextFormField(
-                      style: inputStyle,
-                      decoration: const InputDecoration(
-                          hintText: 'Seu email',
-                          hintStyle: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Por favor insira um email';
-                        }
-                        return null;
-                      },
-                    ),
-                    Divider(),
-                    TextFormField(
-                      style: inputStyle,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        hintText: 'Sua Senha',
-                        hintStyle: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Por favor, insira uma senha';
-                        }
-                        return null;
-                      },
-                    ),
-                    Divider(),
-                    TextFormField(
-                      style: inputStyle,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        hintText: 'Confirme sua Senha',
-                        hintStyle: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Por favor, confirme a senha';
-                        }
-                        return null;
-                      },
-                    ),
-                  ],
-                )),
+                      children: [
+                        TextFormField(
+                          style: inputStyle,
+                          decoration: const InputDecoration(
+                              hintText: 'Seu Nome',
+                              hintStyle: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor insira um nome';
+                            }
+                            return null;
+                          },
+                        ),
+                        Divider(),
+                        TextFormField(
+                          style: inputStyle,
+                          decoration: const InputDecoration(
+                              hintText: 'Seu email',
+                              hintStyle: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor insira um email';
+                            }
+                            return null;
+                          },
+                        ),
+                        Divider(),
+                        TextFormField(
+                          style: inputStyle,
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            hintText: 'Sua Senha',
+                            hintStyle: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor, insira uma senha';
+                            }
+                            return null;
+                          },
+                        ),
+                        Divider(),
+                        TextFormField(
+                          style: inputStyle,
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            hintText: 'Confirme sua Senha',
+                            hintStyle: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor, confirme a senha';
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    )),
                 Container(
                   padding: EdgeInsets.only(top: 30),
                   child: Row(
