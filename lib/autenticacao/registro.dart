@@ -1,4 +1,5 @@
 import 'package:appacai/autenticacao/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Registro extends StatelessWidget {
@@ -14,6 +15,19 @@ class Registro extends StatelessWidget {
 
   final TextStyle inputStyle =
       new TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+
+  final usuarioEmail = TextEditingController();
+  final usuarioSenha = TextEditingController();
+
+  _registrar(String email, String senha) async {
+    WidgetsFlutterBinding.ensureInitialized();
+    FirebaseAuth auth = FirebaseAuth.instance;
+    try {
+      await auth.createUserWithEmailAndPassword(email: email, password: senha);
+    } catch (erro) {
+      print(erro);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +73,7 @@ class Registro extends StatelessWidget {
                         ),
                         Divider(),
                         TextFormField(
+                          controller: usuarioEmail,
                           style: inputStyle,
                           decoration: const InputDecoration(
                               hintText: 'Seu email',
@@ -73,6 +88,7 @@ class Registro extends StatelessWidget {
                         ),
                         Divider(),
                         TextFormField(
+                          controller: usuarioSenha,
                           style: inputStyle,
                           obscureText: true,
                           decoration: const InputDecoration(
@@ -124,7 +140,11 @@ class Registro extends StatelessWidget {
                       ),
                       TextButton(
                         style: flatButtonStyle,
-                        onPressed: null,
+                        onPressed: () {
+                          _registrar(usuarioEmail.text, usuarioSenha.text);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => Login()));
+                        },
                         child: Text(
                           "Registrar",
                           style: TextStyle(

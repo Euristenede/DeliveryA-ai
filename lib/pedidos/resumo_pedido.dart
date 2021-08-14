@@ -254,7 +254,8 @@ class _ResumoPedidoState extends State<ResumoPedido> {
               ),
               TextButton(
                 style: flatButtonStyle,
-                onPressed: null,
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Catalogo())),
                 child: Row(
                   children: [
                     Text(

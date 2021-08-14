@@ -1,5 +1,6 @@
 import 'package:appacai/apresentacao/home/catalogo.dart';
 import 'package:appacai/autenticacao/registro.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {
@@ -15,6 +16,25 @@ class Login extends StatelessWidget {
 
   final TextStyle inputStyle =
       new TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+
+  final usuarioEmail = TextEditingController();
+  final usuarioSenha = TextEditingController();
+  String usuario = "";
+  _logar(String email, String senha) async {
+    WidgetsFlutterBinding.ensureInitialized();
+    FirebaseAuth auth = FirebaseAuth.instance;
+    /*auth
+        .signInWithEmailAndPassword(email: email, password: senha)
+        .then((firebaseUser) {
+      usuario = firebaseUser.email;
+    }).catchError((erro) {
+      usuario = "";
+    });*/
+    var firebaseUser =
+        await auth.signInWithEmailAndPassword(email: email, password: senha);
+
+    usuario = firebaseUser.email;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +66,7 @@ class Login extends StatelessWidget {
                     child: Column(
                       children: [
                         TextFormField(
+                          controller: usuarioEmail,
                           style: inputStyle,
                           decoration: const InputDecoration(
                               hintText: 'Seu email',
@@ -60,6 +81,7 @@ class Login extends StatelessWidget {
                         ),
                         Divider(),
                         TextFormField(
+                          controller: usuarioSenha,
                           style: inputStyle,
                           obscureText: true,
                           decoration: const InputDecoration(
@@ -97,10 +119,15 @@ class Login extends StatelessWidget {
                       ),
                       TextButton(
                         style: flatButtonStyle,
-                        onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Catalogo())),
+                        onPressed: () async {
+                          await _logar(usuarioEmail.text, usuarioSenha.text);
+                          if (usuario == this.usuarioEmail.text) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Catalogo()));
+                          }
+                        },
                         child: Text(
                           "Entrar",
                           style: TextStyle(

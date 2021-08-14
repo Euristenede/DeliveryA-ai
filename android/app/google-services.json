@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "844873515618",
+    "project_id": "appacai-7a546",
+    "storage_bucket": "appacai-7a546.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:844873515618:android:a0dd315039a8a27613c73b",
+        "android_client_info": {
+          "package_name": "br.com.euristenedesantos.appacai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "844873515618-5ootcal6horfugl84ou459s35nu7aef2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGje_8MrPE-88gecgNtYsIE38kXyyBqYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "844873515618-5ootcal6horfugl84ou459s35nu7aef2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
