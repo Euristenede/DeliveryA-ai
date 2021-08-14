@@ -8,7 +8,7 @@ import 'inicializacao/start_logado.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FirebaseAuth auth = FirebaseAuth.instance;
-  auth.signOut();
+  //auth.signOut();
   FirebaseUser usuarioAtual = await auth.currentUser();
 
   if (usuarioAtual != null) {

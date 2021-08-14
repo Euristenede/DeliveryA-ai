@@ -1,4 +1,5 @@
 import 'package:appacai/autenticacao/login.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -16,17 +17,31 @@ class Registro extends StatelessWidget {
   final TextStyle inputStyle =
       new TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
 
+  final usuarioNome = TextEditingController();
   final usuarioEmail = TextEditingController();
   final usuarioSenha = TextEditingController();
-
-  _registrar(String email, String senha) async {
+  String idUsuario = "";
+  _registrar(String nome, String email, String senha) async {
     WidgetsFlutterBinding.ensureInitialized();
     FirebaseAuth auth = FirebaseAuth.instance;
     try {
       await auth.createUserWithEmailAndPassword(email: email, password: senha);
+      var firebaseUser =
+          await auth.signInWithEmailAndPassword(email: email, password: senha);
+      idUsuario = await firebaseUser.uid;
+      await _salvarUsuario(nome, email, idUsuario);
     } catch (erro) {
       print(erro);
     }
+  }
+
+  _salvarUsuario(String nome, String email, String id) async {
+    WidgetsFlutterBinding.ensureInitialized();
+    Firestore db = Firestore.instance;
+    await db
+        .collection("usuario")
+        .document(id)
+        .setData({"nome": nome, "email": email});
   }
 
   @override
@@ -59,6 +74,7 @@ class Registro extends StatelessWidget {
                     child: Column(
                       children: [
                         TextFormField(
+                          controller: usuarioNome,
                           style: inputStyle,
                           decoration: const InputDecoration(
                               hintText: 'Seu Nome',
@@ -140,8 +156,10 @@ class Registro extends StatelessWidget {
                       ),
                       TextButton(
                         style: flatButtonStyle,
-                        onPressed: () {
-                          _registrar(usuarioEmail.text, usuarioSenha.text);
+                        onPressed: () async {
+                          await _registrar(usuarioNome.text, usuarioEmail.text,
+                              usuarioSenha.text);
+                          print("id usuario -> " + idUsuario);
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => Login()));
                         },

@@ -23,13 +23,6 @@ class Login extends StatelessWidget {
   _logar(String email, String senha) async {
     WidgetsFlutterBinding.ensureInitialized();
     FirebaseAuth auth = FirebaseAuth.instance;
-    /*auth
-        .signInWithEmailAndPassword(email: email, password: senha)
-        .then((firebaseUser) {
-      usuario = firebaseUser.email;
-    }).catchError((erro) {
-      usuario = "";
-    });*/
     var firebaseUser =
         await auth.signInWithEmailAndPassword(email: email, password: senha);
 

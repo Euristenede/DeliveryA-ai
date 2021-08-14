@@ -23,35 +23,33 @@ class _CatalogoState extends State<Catalogo> {
   final TextStyle estilo = new TextStyle(
       color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold);
 
-  var dados;
-
-  var chave = Map();
-
-  List list = [];
-
-  _limparLista() {
-    setState(() {
-      list.clear();
-      chave.clear();
-    });
-  }
+  var list;
 
   _recuperarProdutos(String produto) async {
     WidgetsFlutterBinding.ensureInitialized();
     Firestore db = Firestore.instance;
-    _limparLista();
-    db.collection(produto).snapshots().listen((snapshot) {
-      for (DocumentSnapshot item in snapshot.documents) {
-        setState(() {
-          dados = item.data;
-          chave[item] = dados;
-        });
-      }
+    QuerySnapshot querySnapshot = await db.collection(produto).getDocuments();
+    for (DocumentSnapshot item in querySnapshot.documents) {
+      var dados = item.data;
       setState(() {
-        list = chave.values.toList();
+        list = [
+          {
+            'categoria': dados["categoria"],
+            'descricao': dados["descricao"],
+            'preco': dados["preco"]
+          }
+        ];
       });
-    });
+    }
   }
+
+  /*var list = [
+    {
+      'categoria': "Açaí com banana",
+      'descricao': "Banana e leite condençado",
+      'preco': r"R$ 12,00"
+    }
+  ];*/
 
   @override
   Widget build(BuildContext context) {
@@ -270,8 +268,8 @@ class _CatalogoState extends State<Catalogo> {
                       children: <Widget>[
                         TextButton(
                           style: flatButtonStyle,
-                          onPressed: () async {
-                            await _recuperarProdutos("acaiCopo");
+                          onPressed: () {
+                            _recuperarProdutos("acaiCopo");
                           },
                           child: Text(
                             "Açaí no copo",
@@ -286,9 +284,7 @@ class _CatalogoState extends State<Catalogo> {
                         ),
                         TextButton(
                           style: flatButtonStyle,
-                          onPressed: () async {
-                            await _recuperarProdutos("acaiTigela");
-                          },
+                          onPressed: null,
                           child: Text(
                             "Açai na tigela",
                             style: TextStyle(
@@ -302,9 +298,7 @@ class _CatalogoState extends State<Catalogo> {
                         ),
                         TextButton(
                           style: flatButtonStyle,
-                          onPressed: () async {
-                            await _recuperarProdutos("acaiCupuacu");
-                          },
+                          onPressed: null,
                           child: Text(
                             "Açaí com cupuaçu",
                             style: TextStyle(
@@ -318,11 +312,9 @@ class _CatalogoState extends State<Catalogo> {
                         ),
                         TextButton(
                           style: flatButtonStyle,
-                          onPressed: () async {
-                            await _recuperarProdutos("acaiPrestigo");
-                          },
+                          onPressed: null,
                           child: Text(
-                            "Açaí com prestigio",
+                            "Açaí com sorvete",
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -338,57 +330,7 @@ class _CatalogoState extends State<Catalogo> {
                       width: double.infinity,
                       child: Column(
                         children: <Widget>[
-                          for (var i in list)
-                            GestureDetector(
-                              onTap: () {
-                                print(i['categoria'].toString());
-                                print(i['descricao'].toString());
-                                print(i['preco'].toString());
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            AcompanhamentoEntrega()));
-                              },
-                              child: Container(
-                                child: Column(
-                                  children: [
-                                    Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      color: Colors.purple[50],
-                                      elevation: 10,
-                                      child: Container(
-                                        padding: EdgeInsets.all(4.0),
-                                        width: double.infinity,
-                                        child: Row(
-                                          children: [
-                                            Column(
-                                              children: <Widget>[
-                                                Image.asset(
-                                                  "assets/images/acai_copo.png",
-                                                  height: 50,
-                                                  width: 70,
-                                                )
-                                              ],
-                                            ),
-                                            Column(
-                                              children: <Widget>[
-                                                Text(i['categoria'].toString()),
-                                                Text(i['descricao'].toString()),
-                                                Text(i['preco'].toString())
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                          for(var i in list)
                         ],
                       )),
                 ],
