@@ -1,7 +1,9 @@
 import 'package:appacai/apresentacao/home/catalogo.dart';
 import 'package:appacai/autenticacao/registro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatelessWidget {
   final ButtonStyle flatButtonStyle = TextButton.styleFrom(
@@ -20,6 +22,7 @@ class Login extends StatelessWidget {
   final usuarioEmail = TextEditingController();
   final usuarioSenha = TextEditingController();
   String usuario = "";
+  String usuarioId = "";
   _logar(String email, String senha) async {
     WidgetsFlutterBinding.ensureInitialized();
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -27,6 +30,17 @@ class Login extends StatelessWidget {
         await auth.signInWithEmailAndPassword(email: email, password: senha);
 
     usuario = firebaseUser.email;
+    usuarioId = firebaseUser.uid;
+  }
+
+  _recuperarUsuario(String id) async {
+    WidgetsFlutterBinding.ensureInitialized();
+    Firestore db = Firestore.instance;
+    DocumentSnapshot snapshot =
+        await db.collection("usuario").document(id).get();
+    var dados = snapshot.data;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("nomeUsuario", dados["nome"]);
   }
 
   @override
@@ -115,6 +129,7 @@ class Login extends StatelessWidget {
                         onPressed: () async {
                           await _logar(usuarioEmail.text, usuarioSenha.text);
                           if (usuario == this.usuarioEmail.text) {
+                            await _recuperarUsuario(usuarioId);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

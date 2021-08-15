@@ -5,6 +5,7 @@ import 'package:appacai/apresentacao/home/catalogo.dart';
 import 'package:appacai/pedidos/local_entrega.dart';
 import 'package:appacai/pedidos/confirmar_pedido.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ResumoPedido extends StatefulWidget {
   @override
@@ -24,15 +25,36 @@ class _ResumoPedidoState extends State<ResumoPedido> {
       color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold);
 
   String _localEntrega = "";
+  String _localEntregaCompleto = "";
   String _textoPedido = "";
   String _textoObservacao = "";
   String _textoFormaPagamento = "";
+  String _nomeUsuario = "";
+  int _precoTotal = 0;
+  int _valorTotal = 0;
+  int _quantidadePedido = 0;
 
   _recuperarLocalEntrega() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var localEntrega = prefs.getString("localEntregaLocal");
     setState(() {
       _localEntrega = localEntrega!;
+    });
+  }
+
+  _recuperarQuantidadePedido() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var quantidadePedido = prefs.getInt("pedidoQuantidade");
+    setState(() {
+      _quantidadePedido = quantidadePedido!;
+    });
+  }
+
+  _recuperarLocalCompleto() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var localEntrega = prefs.getString("localEntrega");
+    setState(() {
+      _localEntregaCompleto = localEntrega!;
     });
   }
 
@@ -57,12 +79,52 @@ class _ResumoPedidoState extends State<ResumoPedido> {
     });
   }
 
+  _atualizarValorTotal() async {
+    setState(() {
+      _valorTotal = _precoTotal + 4;
+    });
+  }
+
+  _recuperarPrecoTotal() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _precoTotal = prefs.getInt("precoTotal")!;
+    });
+    _atualizarValorTotal();
+  }
+
+  _recuperarUsuario() async {
+    final prefs = await SharedPreferences.getInstance();
+    var usuario = prefs.getString("nomeUsuario");
+    setState(() {
+      _nomeUsuario = usuario!;
+    });
+  }
+
+  _salvarPedido() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    Firestore db = Firestore.instance;
+    await db.collection("pedidos").add({
+      "cliente": _nomeUsuario,
+      "localEntrega": _localEntregaCompleto,
+      "pedido": _textoPedido,
+      "quantidade": _quantidadePedido,
+      "observavao": _textoObservacao,
+      "pagamento": _textoFormaPagamento,
+      "valor": _valorTotal
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     _recuperarLocalEntrega();
+    _recuperarLocalCompleto();
     _recuperarPedido();
     _recuperarObservacao();
     _recuperarFormaPagamento();
+    _recuperarPrecoTotal();
+    _recuperarUsuario();
+    _recuperarQuantidadePedido();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -148,7 +210,7 @@ class _ResumoPedidoState extends State<ResumoPedido> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              _textoPedido,
+                              _quantidadePedido.toString() + " " + _textoPedido,
                               style: TextStyle(
                                   color: Colors.purple,
                                   fontSize: 15,
@@ -162,6 +224,7 @@ class _ResumoPedidoState extends State<ResumoPedido> {
                                             ConfirmaPedido())),
                                 child: Row(
                                   children: [
+                                    Text("Editar"),
                                     Icon(Icons.create_outlined),
                                   ],
                                 ))
@@ -195,7 +258,8 @@ class _ResumoPedidoState extends State<ResumoPedido> {
                                         builder: (context) => Observacao())),
                                 child: Row(
                                   children: [
-                                    Text("Inserir"),
+                                    Text("Editar"),
+                                    Icon(Icons.create_outlined),
                                   ],
                                 ))
                           ],
@@ -241,7 +305,8 @@ class _ResumoPedidoState extends State<ResumoPedido> {
                                             FormasPagamento())),
                                 child: Row(
                                   children: [
-                                    Text("Inserir"),
+                                    Text("Editar"),
+                                    Icon(Icons.create_outlined),
                                   ],
                                 ))
                           ],
@@ -282,15 +347,60 @@ class _ResumoPedidoState extends State<ResumoPedido> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Text("Produtos"), Text(r"R$ 54,99")],
+                          children: [
+                            Text(
+                              "Produtos",
+                              style: TextStyle(
+                                  color: Colors.purple,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              r"R$ " + _precoTotal.toString() + ",00",
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Text("Taxa de entrega"), Text(r"R$ 4,00")],
+                          children: [
+                            Text(
+                              "Taxa de entrega",
+                              style: TextStyle(
+                                  color: Colors.purple,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              r"R$ 4,00",
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Text("Valor Total"), Text(r"R$ 58,99")],
+                          children: [
+                            Text(
+                              "Valor Total",
+                              style: TextStyle(
+                                  color: Colors.purple,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              r"R$ " + _valorTotal.toString() + ",00",
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
                         )
                       ],
                     ),
@@ -327,8 +437,11 @@ class _ResumoPedidoState extends State<ResumoPedido> {
               ),
               TextButton(
                 style: flatButtonStyle,
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Catalogo())),
+                onPressed: () async {
+                  await _salvarPedido();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Catalogo()));
+                },
                 child: Row(
                   children: [
                     Text(

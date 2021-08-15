@@ -26,6 +26,8 @@ class _CatalogoState extends State<Catalogo> {
 
   var dados;
 
+  String _nomeUsuario = "";
+
   var chave = Map();
 
   List list = [];
@@ -54,13 +56,27 @@ class _CatalogoState extends State<Catalogo> {
     });
   }
 
-  _salvarPedido(String categoria, String descricao, String preco) async {
+  _salvarPedido(String categoria) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString("pedido", categoria);
   }
 
+  _salvarPedidoPreco(int preco) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt("pedidoPreco", preco);
+  }
+
+  _recuperarUsuario() async {
+    final prefs = await SharedPreferences.getInstance();
+    var usuario = prefs.getString("nomeUsuario");
+    setState(() {
+      _nomeUsuario = usuario!;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _recuperarUsuario();
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -82,9 +98,16 @@ class _CatalogoState extends State<Catalogo> {
                       child: Column(
                         children: [
                           Text(
-                            "Informações",
+                            "Bem Vindo",
                             style: TextStyle(
                                 color: Colors.purple,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            _nomeUsuario,
+                            style: TextStyle(
+                                color: Colors.black,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold),
                           )
@@ -346,11 +369,9 @@ class _CatalogoState extends State<Catalogo> {
                         children: <Widget>[
                           for (var i in list)
                             GestureDetector(
-                              onTap: () {
-                                _salvarPedido(
-                                    i['categoria'].toString(),
-                                    i['descricao'].toString(),
-                                    i['preco'].toString());
+                              onTap: () async {
+                                await _salvarPedido(i['categoria'].toString());
+                                await _salvarPedidoPreco(i['precoInt']);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(

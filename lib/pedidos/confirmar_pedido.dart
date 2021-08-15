@@ -21,16 +21,68 @@ class _ConfirmaPedidoState extends State<ConfirmaPedido> {
       color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold);
 
   String _textoPedido = "";
+  int _precoPedido = 0;
+  int _precoAdicionais = 0;
+  int _precoFrutas = 0;
+  int _precoTotal = 0;
+  int _quantidadePedido = 1;
   List<String> _acompanhamento = [];
   List<String> _adicionais = [];
   List<String> _calda = [];
   List<String> _frutas = [];
+
+  _incrementar() {
+    setState(() {
+      _quantidadePedido = _quantidadePedido + 1;
+    });
+  }
+
+  _decrementar() {
+    if (_quantidadePedido > 1) {
+      setState(() {
+        _quantidadePedido = _quantidadePedido - 1;
+      });
+    }
+  }
 
   _recuperarPedido() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _textoPedido = prefs.getString("pedido")!;
     });
+  }
+
+  _recuperarPedidoPreco() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _precoPedido = prefs.getInt("pedidoPreco")!;
+    });
+  }
+
+  _recuperarPrecoAdicionais() {
+    _precoAdicionais = 0;
+    _precoFrutas = 0;
+    _precoTotal = 0;
+    for (var i in _adicionais) {
+      _precoAdicionais = _precoAdicionais + 4;
+    }
+    for (var j in _frutas) {
+      _precoFrutas = _precoFrutas + 4;
+    }
+    setState(() {
+      _precoTotal = _precoPedido + _precoAdicionais + _precoFrutas;
+      _precoTotal = _precoTotal * _quantidadePedido;
+    });
+  }
+
+  _salvarPrecoTotal() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt("precoTotal", _precoTotal);
+  }
+
+  _salvarQuantidade() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt("pedidoQuantidade", _quantidadePedido);
   }
 
   _recuperarAcompanhamento() async {
@@ -68,10 +120,12 @@ class _ConfirmaPedidoState extends State<ConfirmaPedido> {
   @override
   Widget build(BuildContext context) {
     _recuperarPedido();
+    _recuperarPedidoPreco();
     _recuperarAcompanhamento();
     _recuperarAdicionais();
     _recuperarCalda();
     _recuperarFrutas();
+    _recuperarPrecoAdicionais();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -110,15 +164,26 @@ class _ConfirmaPedidoState extends State<ConfirmaPedido> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(left: 20, right: 10),
-            child: Text(
-              " - " + _textoPedido,
-              style: TextStyle(
-                  color: Colors.purple,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
+              padding: EdgeInsets.only(left: 20, right: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    " - " + _textoPedido,
+                    style: TextStyle(
+                        color: Colors.purple,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    r"R$ " + _precoPedido.toString() + ",00",
+                    style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              )),
           Container(
             padding: EdgeInsets.only(left: 40, right: 10),
             child: Text(
@@ -152,15 +217,26 @@ class _ConfirmaPedidoState extends State<ConfirmaPedido> {
           ),
           for (var i in _adicionais)
             Container(
-              padding: EdgeInsets.only(left: 60, right: 10),
-              child: Text(
-                " - " + i,
-                style: TextStyle(
-                    color: Colors.purple,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
+                padding: EdgeInsets.only(left: 60, right: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      " - " + i,
+                      style: TextStyle(
+                          color: Colors.purple,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      r"R$ 4.00",
+                      style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                )),
           Container(
             padding: EdgeInsets.only(left: 40, right: 10),
             child: Text(
@@ -194,15 +270,59 @@ class _ConfirmaPedidoState extends State<ConfirmaPedido> {
           ),
           for (var i in _frutas)
             Container(
-              padding: EdgeInsets.only(left: 60, right: 10),
-              child: Text(
-                " - " + i,
-                style: TextStyle(
-                    color: Colors.purple,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold),
-              ),
+                padding: EdgeInsets.only(left: 60, right: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      " - " + i,
+                      style: TextStyle(
+                          color: Colors.purple,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      r"R$ 4.00",
+                      style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                )),
+          Container(
+            margin: EdgeInsets.only(top: 70),
+            child: Column(
+              children: [
+                Text(
+                  r"R$" + _precoTotal.toString(),
+                  style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon:
+                          Icon(Icons.remove_circle_outline, color: Colors.red),
+                      onPressed: () {
+                        _decrementar();
+                      },
+                    ),
+                    Text(_quantidadePedido.toString()),
+                    IconButton(
+                      icon: Icon(Icons.add_circle, color: Colors.green),
+                      onPressed: () {
+                        _incrementar();
+                      },
+                    ),
+                  ],
+                )
+              ],
             ),
+          ),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
@@ -233,8 +353,12 @@ class _ConfirmaPedidoState extends State<ConfirmaPedido> {
               ),
               TextButton(
                 style: flatButtonStyle,
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ResumoPedido())),
+                onPressed: () async {
+                  await _salvarPrecoTotal();
+                  await _salvarQuantidade();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ResumoPedido()));
+                },
                 child: Row(
                   children: [
                     Text(
