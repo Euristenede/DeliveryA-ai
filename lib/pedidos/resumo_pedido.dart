@@ -1,6 +1,10 @@
+import 'package:appacai/pedidos/forma_pagamento.dart';
+import 'package:appacai/pedidos/observacao.dart';
 import 'package:flutter/material.dart';
 import 'package:appacai/apresentacao/home/catalogo.dart';
 import 'package:appacai/pedidos/local_entrega.dart';
+import 'package:appacai/pedidos/confirmar_pedido.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ResumoPedido extends StatefulWidget {
   @override
@@ -19,8 +23,46 @@ class _ResumoPedidoState extends State<ResumoPedido> {
   final TextStyle estilo = new TextStyle(
       color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold);
 
+  String _localEntrega = "";
+  String _textoPedido = "";
+  String _textoObservacao = "";
+  String _textoFormaPagamento = "";
+
+  _recuperarLocalEntrega() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var localEntrega = prefs.getString("localEntregaLocal");
+    setState(() {
+      _localEntrega = localEntrega!;
+    });
+  }
+
+  _recuperarPedido() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _textoPedido = prefs.getString("pedido")!;
+    });
+  }
+
+  _recuperarObservacao() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _textoObservacao = prefs.getString("observacao")!;
+    });
+  }
+
+  _recuperarFormaPagamento() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _textoFormaPagamento = prefs.getString("formaPagamento")!;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _recuperarLocalEntrega();
+    _recuperarPedido();
+    _recuperarObservacao();
+    _recuperarFormaPagamento();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -48,7 +90,13 @@ class _ResumoPedidoState extends State<ResumoPedido> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Local de Entrega"),
+                            Text(
+                              "Local de Entrega",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
                             TextButton(
                                 onPressed: () => Navigator.push(
                                     context,
@@ -64,7 +112,15 @@ class _ResumoPedidoState extends State<ResumoPedido> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: [Text("Av. 21 de abril, Centro")],
+                          children: [
+                            Text(
+                              _localEntrega,
+                              style: TextStyle(
+                                  color: Colors.purple,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
                         )
                       ],
                     ),
@@ -79,18 +135,31 @@ class _ResumoPedidoState extends State<ResumoPedido> {
                       children: [
                         Row(
                           children: [
-                            Text("Pedidos"),
+                            Text(
+                              "Pedidos",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("1 Açaí Creme de Ninho - 500 ml"),
+                            Text(
+                              _textoPedido,
+                              style: TextStyle(
+                                  color: Colors.purple,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            ),
                             TextButton(
                                 onPressed: () => Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => LocalEntrega())),
+                                        builder: (context) =>
+                                            ConfirmaPedido())),
                                 child: Row(
                                   children: [
                                     Icon(Icons.create_outlined),
@@ -112,12 +181,18 @@ class _ResumoPedidoState extends State<ResumoPedido> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Observação"),
+                            Text(
+                              "Observação",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
                             TextButton(
                                 onPressed: () => Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => LocalEntrega())),
+                                        builder: (context) => Observacao())),
                                 child: Row(
                                   children: [
                                     Text("Inserir"),
@@ -127,7 +202,15 @@ class _ResumoPedidoState extends State<ResumoPedido> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: [Text("Inserir Observação")],
+                          children: [
+                            Text(
+                              _textoObservacao,
+                              style: TextStyle(
+                                  color: Colors.purple,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
                         )
                       ],
                     ),
@@ -143,12 +226,19 @@ class _ResumoPedidoState extends State<ResumoPedido> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Cupom de Desconto"),
+                            Text(
+                              "Formas de Pagamento",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
                             TextButton(
                                 onPressed: () => Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => LocalEntrega())),
+                                        builder: (context) =>
+                                            FormasPagamento())),
                                 child: Row(
                                   children: [
                                     Text("Inserir"),
@@ -158,38 +248,15 @@ class _ResumoPedidoState extends State<ResumoPedido> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: [Text("10% de desconto")],
-                        )
-                      ],
-                    ),
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    color: Colors.purple[50],
-                    elevation: 10,
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Formas de Pagamento"),
-                            TextButton(
-                                onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LocalEntrega())),
-                                child: Row(
-                                  children: [
-                                    Text("Inserir"),
-                                  ],
-                                ))
+                            Text(
+                              _textoFormaPagamento,
+                              style: TextStyle(
+                                  color: Colors.purple,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            )
                           ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [Text("Débito - Visa")],
                         )
                       ],
                     ),
@@ -204,7 +271,13 @@ class _ResumoPedidoState extends State<ResumoPedido> {
                       children: [
                         Row(
                           children: [
-                            Text("Resumo"),
+                            Text(
+                              "Resumo",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ],
                         ),
                         Row(

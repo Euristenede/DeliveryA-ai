@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:appacai/apresentacao/home/catalogo.dart';
 import 'package:appacai/pedidos/adicionais_pedidos.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AcompanhamentoEntrega extends StatefulWidget {
   @override
@@ -33,6 +34,48 @@ class _AcompanhamentoEntregaState extends State<AcompanhamentoEntrega> {
       _countFlocoArroz = 0,
       _countFlocoTapioca = 0;
 
+  _verificaSelecionado() async {
+    List<String> descricao = [];
+    if (_countAmendoin > 0) {
+      descricao.add("AMENDOIN");
+    }
+    if (_countChocobol > 0) {
+      descricao.add("CHOCOBOL");
+    }
+    if (_countLeitePo > 0) {
+      descricao.add("LEITE EM PÓ");
+    }
+    if (_countGranola > 0) {
+      descricao.add("GRANOLA");
+    }
+    if (_countFarinhaLactea > 0) {
+      descricao.add("FARINHA LACTEA");
+    }
+    if (_countGranulado > 0) {
+      descricao.add("GRANULADO");
+    }
+    if (_countPacoca > 0) {
+      descricao.add("PAÇOCA");
+    }
+    if (_countFruitRings > 0) {
+      descricao.add("FRUIT RINGS");
+    }
+    if (_countSucrilhos > 0) {
+      descricao.add("SUCRILHOS");
+    }
+    if (_countFlocoArroz > 0) {
+      descricao.add("FLOCOS DE ARROZ");
+    }
+    if (_countFlocoTapioca > 0) {
+      descricao.add("FLOCOS DE TAPIOCA");
+    }
+    if (_countFarinhaLactea > 0) {
+      descricao.add("FARINHA LACTEA");
+    }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList("acompanhamento", descricao);
+  }
+
   _incrementar(String nome) {
     if (nome == "amendoin" && _countAmendoin == 0 && _count < 3) {
       setState(() {
@@ -44,6 +87,60 @@ class _AcompanhamentoEntregaState extends State<AcompanhamentoEntrega> {
         _countChocobol = _countChocobol + 1;
         _count = _count + 1;
       });
+    } else if (nome == "leitePo" && _countLeitePo == 0 && _count < 3) {
+      setState(() {
+        _countLeitePo = _countLeitePo + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "granola" && _countGranola == 0 && _count < 3) {
+      setState(() {
+        _countGranola = _countGranola + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "farinhaLactea" &&
+        _countFarinhaLactea == 0 &&
+        _count < 3) {
+      setState(() {
+        _countFarinhaLactea = _countFarinhaLactea + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "granulado" && _countGranulado == 0 && _count < 3) {
+      setState(() {
+        _countGranulado = _countGranulado + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "aveia" && _countAveia == 0 && _count < 3) {
+      setState(() {
+        _countAveia = _countAveia + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "pacoca" && _countPacoca == 0 && _count < 3) {
+      setState(() {
+        _countPacoca = _countPacoca + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "fruitRings" && _countFruitRings == 0 && _count < 3) {
+      setState(() {
+        _countFruitRings = _countFruitRings + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "sucrilhos" && _countSucrilhos == 0 && _count < 3) {
+      setState(() {
+        _countSucrilhos = _countSucrilhos + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "flocosArroz" && _countFlocoArroz == 0 && _count < 3) {
+      setState(() {
+        _countFlocoArroz = _countFlocoArroz + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "flocosTapioca" &&
+        _countFlocoTapioca == 0 &&
+        _count < 3) {
+      setState(() {
+        _countFlocoTapioca = _countFlocoTapioca + 1;
+        _count = _count + 1;
+      });
     }
   }
 
@@ -51,6 +148,61 @@ class _AcompanhamentoEntregaState extends State<AcompanhamentoEntrega> {
     if (nome == "amendoin" && _countAmendoin == 1) {
       setState(() {
         _countAmendoin = _countAmendoin - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "chocobol" && _countChocobol == 1) {
+      setState(() {
+        _countChocobol = _countChocobol - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "leitePo" && _countLeitePo == 1) {
+      setState(() {
+        _countLeitePo = _countLeitePo - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "granola" && _countGranola == 1) {
+      setState(() {
+        _countGranola = _countGranola - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "farinhaLactea" && _countFarinhaLactea == 1) {
+      setState(() {
+        _countFarinhaLactea = _countFarinhaLactea - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "granulado" && _countGranulado == 1) {
+      setState(() {
+        _countGranulado = _countGranulado - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "aveia" && _countAveia == 1) {
+      setState(() {
+        _countAveia = _countAveia - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "pacoca" && _countPacoca == 1) {
+      setState(() {
+        _countPacoca = _countPacoca - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "fruitRings" && _countFruitRings == 1) {
+      setState(() {
+        _countFruitRings = _countFruitRings - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "sucrilhos" && _countSucrilhos == 1) {
+      setState(() {
+        _countSucrilhos = _countSucrilhos - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "flocosArroz" && _countFlocoArroz == 1) {
+      setState(() {
+        _countFlocoArroz = _countFlocoArroz - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "flocosTapioca" && _countFlocoTapioca == 1) {
+      setState(() {
+        _countFlocoTapioca = _countFlocoTapioca - 1;
         _count = _count - 1;
       });
     }
@@ -157,14 +309,14 @@ class _AcompanhamentoEntregaState extends State<AcompanhamentoEntrega> {
                           icon: Icon(Icons.remove_circle_outline,
                               color: Colors.red),
                           onPressed: () {
-                            _decrementar("leitepo");
+                            _decrementar("leitePo");
                           },
                         ),
                         Text('$_countLeitePo'),
                         IconButton(
                           icon: Icon(Icons.add_circle, color: Colors.green),
                           onPressed: () {
-                            _incrementar("leitepo");
+                            _incrementar("leitePo");
                           },
                         ),
                         Text(
@@ -207,14 +359,14 @@ class _AcompanhamentoEntregaState extends State<AcompanhamentoEntrega> {
                           icon: Icon(Icons.remove_circle_outline,
                               color: Colors.red),
                           onPressed: () {
-                            _decrementar("farinhalactea");
+                            _decrementar("farinhaLactea");
                           },
                         ),
                         Text('$_countFarinhaLactea'),
                         IconButton(
                           icon: Icon(Icons.add_circle, color: Colors.green),
                           onPressed: () {
-                            _incrementar("farinhalactea");
+                            _incrementar("farinhaLactea");
                           },
                         ),
                         Text(
@@ -307,14 +459,14 @@ class _AcompanhamentoEntregaState extends State<AcompanhamentoEntrega> {
                           icon: Icon(Icons.remove_circle_outline,
                               color: Colors.red),
                           onPressed: () {
-                            _decrementar("fruitrings");
+                            _decrementar("fruitRings");
                           },
                         ),
                         Text('$_countFruitRings'),
                         IconButton(
                           icon: Icon(Icons.add_circle, color: Colors.green),
                           onPressed: () {
-                            _incrementar("fruitrings");
+                            _incrementar("fruitRings");
                           },
                         ),
                         Text(
@@ -357,14 +509,14 @@ class _AcompanhamentoEntregaState extends State<AcompanhamentoEntrega> {
                           icon: Icon(Icons.remove_circle_outline,
                               color: Colors.red),
                           onPressed: () {
-                            _decrementar("flocosarroz");
+                            _decrementar("flocosArroz");
                           },
                         ),
                         Text('$_countFlocoArroz'),
                         IconButton(
                           icon: Icon(Icons.add_circle, color: Colors.green),
                           onPressed: () {
-                            _incrementar("flocosarroz");
+                            _incrementar("flocosArroz");
                           },
                         ),
                         Text(
@@ -382,14 +534,14 @@ class _AcompanhamentoEntregaState extends State<AcompanhamentoEntrega> {
                           icon: Icon(Icons.remove_circle_outline,
                               color: Colors.red),
                           onPressed: () {
-                            _decrementar("flocostapioca");
+                            _decrementar("flocosTapioca");
                           },
                         ),
                         Text('$_countFlocoTapioca'),
                         IconButton(
                           icon: Icon(Icons.add_circle, color: Colors.green),
                           onPressed: () {
-                            _incrementar("flocostapioca");
+                            _incrementar("flocosTapioca");
                           },
                         ),
                         Text(
@@ -436,8 +588,11 @@ class _AcompanhamentoEntregaState extends State<AcompanhamentoEntrega> {
               ),
               TextButton(
                 style: flatButtonStyle,
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Adicionais())),
+                onPressed: () async {
+                  await _verificaSelecionado();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Adicionais()));
+                },
                 child: Row(
                   children: [
                     Text(

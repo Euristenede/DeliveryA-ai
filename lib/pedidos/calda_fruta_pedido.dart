@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:appacai/pedidos/adicionais_pedidos.dart';
 import 'package:appacai/pedidos/confirmar_pedido.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CaldaFruta extends StatefulWidget {
   @override
@@ -20,37 +21,178 @@ class _CaldaFrutaState extends State<CaldaFruta> {
   );
 
   int _count = 0,
-      _countAmendoin = 0,
-      _countChocobol = 0,
-      _countLeitePo = 0,
-      _countGranola = 0,
-      _countFarinhaLactea = 0,
-      _countGranulado = 0,
-      _countAveia = 0,
-      _countPacoca = 0,
-      _countFruitRings = 0,
-      _countSucrilhos = 0,
-      _countFlocoArroz = 0,
-      _countFlocoTapioca = 0;
+      _countLeiteCondensado = 0,
+      _countChocolate = 0,
+      _countMorango = 0,
+      _countCaramelo = 0,
+      _countXaropeGuarana = 0,
+      _countBanana = 0,
+      _countMorangos = 0,
+      _countKiwi = 0,
+      _countUva = 0,
+      _countManga = 0,
+      _countPessego = 0;
+
+  _verificaSelecionadoCalda() async {
+    List<String> descricao = [];
+    if (_countLeiteCondensado > 0) {
+      descricao.add("LEITE CONDENSADO");
+    }
+    if (_countChocolate > 0) {
+      descricao.add("CHOCOLATE");
+    }
+    if (_countMorango > 0) {
+      descricao.add("MORANGO");
+    }
+    if (_countCaramelo > 0) {
+      descricao.add("CARAMELO");
+    }
+    if (_countXaropeGuarana > 0) {
+      descricao.add("XAROPE DE GRARANÁ");
+    }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList("calda", descricao);
+  }
+
+  _verificaSelecionadoFrutas() async {
+    List<String> descricao = [];
+    if (_countBanana > 0) {
+      descricao.add("BANANA");
+    }
+    if (_countMorangos > 0) {
+      descricao.add("MORANGO");
+    }
+    if (_countKiwi > 0) {
+      descricao.add("KIWI");
+    }
+    if (_countUva > 0) {
+      descricao.add("UVA");
+    }
+    if (_countManga > 0) {
+      descricao.add("MANGA");
+    }
+    if (_countPessego > 0) {
+      descricao.add("PESSEGO");
+    }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList("fruta", descricao);
+  }
 
   _incrementar(String nome) {
-    if (nome == "amendoin" && _countAmendoin == 0 && _count < 3) {
+    if (nome == "leiteCondensado" && _countLeiteCondensado == 0 && _count < 1) {
       setState(() {
-        _countAmendoin = _countAmendoin + 1;
+        _countLeiteCondensado = _countLeiteCondensado + 1;
         _count = _count + 1;
       });
-    } else if (nome == "chocobol" && _countChocobol == 0 && _count < 3) {
+    } else if (nome == "chocolate" && _countChocolate == 0 && _count < 1) {
       setState(() {
-        _countChocobol = _countChocobol + 1;
+        _countChocolate = _countChocolate + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "morango" && _countMorango == 0 && _count < 1) {
+      setState(() {
+        _countMorango = _countMorango + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "caramelo" && _countCaramelo == 0 && _count < 1) {
+      setState(() {
+        _countCaramelo = _countCaramelo + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "xaropeGuarana" &&
+        _countXaropeGuarana == 0 &&
+        _count < 1) {
+      setState(() {
+        _countXaropeGuarana = _countXaropeGuarana + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "banana" && _countBanana == 0 && _count < 3) {
+      setState(() {
+        _countBanana = _countBanana + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "morangos" && _countMorangos == 0 && _count < 3) {
+      setState(() {
+        _countMorangos = _countMorangos + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "kiwi" && _countKiwi == 0 && _count < 3) {
+      setState(() {
+        _countKiwi = _countKiwi + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "uva" && _countUva == 0 && _count < 3) {
+      setState(() {
+        _countUva = _countUva + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "manga" && _countManga == 0 && _count < 3) {
+      setState(() {
+        _countManga = _countManga + 1;
+        _count = _count + 1;
+      });
+    } else if (nome == "pessego" && _countPessego == 0 && _count < 3) {
+      setState(() {
+        _countPessego = _countPessego + 1;
         _count = _count + 1;
       });
     }
   }
 
   _decrementar(String nome) {
-    if (nome == "amendoin" && _countAmendoin == 1) {
+    if (nome == "leiteCondensado" && _countLeiteCondensado == 1) {
       setState(() {
-        _countAmendoin = _countAmendoin - 1;
+        _countLeiteCondensado = _countLeiteCondensado - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "chocolate" && _countChocolate == 1) {
+      setState(() {
+        _countChocolate = _countChocolate - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "morango" && _countMorango == 1) {
+      setState(() {
+        _countMorango = _countMorango - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "caramelo" && _countCaramelo == 1) {
+      setState(() {
+        _countCaramelo = _countCaramelo - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "xaropeGuarana" && _countXaropeGuarana == 1) {
+      setState(() {
+        _countXaropeGuarana = _countXaropeGuarana - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "banana" && _countBanana == 1) {
+      setState(() {
+        _countBanana = _countBanana - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "morangos" && _countMorangos == 1) {
+      setState(() {
+        _countMorangos = _countMorangos - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "kiwi" && _countKiwi == 1) {
+      setState(() {
+        _countKiwi = _countKiwi - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "uva" && _countUva == 1) {
+      setState(() {
+        _countUva = _countUva - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "manga" && _countManga == 1) {
+      setState(() {
+        _countManga = _countManga - 1;
+        _count = _count - 1;
+      });
+    } else if (nome == "pessego" && _countPessego == 1) {
+      setState(() {
+        _countPessego = _countPessego - 1;
         _count = _count - 1;
       });
     }
@@ -107,14 +249,14 @@ class _CaldaFrutaState extends State<CaldaFruta> {
                           icon: Icon(Icons.remove_circle_outline,
                               color: Colors.red),
                           onPressed: () {
-                            _decrementar("amendoin");
+                            _decrementar("leiteCondensado");
                           },
                         ),
-                        Text('$_countAmendoin'),
+                        Text('$_countLeiteCondensado'),
                         IconButton(
                           icon: Icon(Icons.add_circle, color: Colors.green),
                           onPressed: () {
-                            _incrementar("amendoin");
+                            _incrementar("leiteCondensado");
                           },
                         ),
                         Text(
@@ -132,14 +274,14 @@ class _CaldaFrutaState extends State<CaldaFruta> {
                           icon: Icon(Icons.remove_circle_outline,
                               color: Colors.red),
                           onPressed: () {
-                            _decrementar("chocobol");
+                            _decrementar("chocolate");
                           },
                         ),
-                        Text('$_countChocobol'),
+                        Text('$_countChocolate'),
                         IconButton(
                           icon: Icon(Icons.add_circle, color: Colors.green),
                           onPressed: () {
-                            _incrementar("chocobol");
+                            _incrementar("chocolate");
                           },
                         ),
                         Text(
@@ -157,14 +299,14 @@ class _CaldaFrutaState extends State<CaldaFruta> {
                           icon: Icon(Icons.remove_circle_outline,
                               color: Colors.red),
                           onPressed: () {
-                            _decrementar("leitepo");
+                            _decrementar("morango");
                           },
                         ),
-                        Text('$_countLeitePo'),
+                        Text('$_countMorango'),
                         IconButton(
                           icon: Icon(Icons.add_circle, color: Colors.green),
                           onPressed: () {
-                            _incrementar("leitepo");
+                            _incrementar("morango");
                           },
                         ),
                         Text(
@@ -182,14 +324,14 @@ class _CaldaFrutaState extends State<CaldaFruta> {
                           icon: Icon(Icons.remove_circle_outline,
                               color: Colors.red),
                           onPressed: () {
-                            _decrementar("granola");
+                            _decrementar("caramelo");
                           },
                         ),
-                        Text('$_countGranola'),
+                        Text('$_countCaramelo'),
                         IconButton(
                           icon: Icon(Icons.add_circle, color: Colors.green),
                           onPressed: () {
-                            _incrementar("granola");
+                            _incrementar("caramelo");
                           },
                         ),
                         Text(
@@ -207,14 +349,14 @@ class _CaldaFrutaState extends State<CaldaFruta> {
                           icon: Icon(Icons.remove_circle_outline,
                               color: Colors.red),
                           onPressed: () {
-                            _decrementar("farinhalactea");
+                            _decrementar("xaropeGuarana");
                           },
                         ),
-                        Text('$_countFarinhaLactea'),
+                        Text('$_countXaropeGuarana'),
                         IconButton(
                           icon: Icon(Icons.add_circle, color: Colors.green),
                           onPressed: () {
-                            _incrementar("farinhalactea");
+                            _incrementar("xaropeGuarana");
                           },
                         ),
                         Text(
@@ -245,151 +387,277 @@ class _CaldaFrutaState extends State<CaldaFruta> {
                         thickness: 2,
                         color: Colors.black,
                       ),
-                      Row(children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.remove_circle_outline,
-                              color: Colors.red),
-                          onPressed: () {
-                            _decrementar("aveia");
-                          },
-                        ),
-                        Text('$_countAveia'),
-                        IconButton(
-                          icon: Icon(Icons.add_circle, color: Colors.green),
-                          onPressed: () {
-                            _incrementar("aveia");
-                          },
-                        ),
-                        Text(
-                          "  BANANA",
-                          style: estilo,
-                        ),
-                      ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    icon: Icon(Icons.remove_circle_outline,
+                                        color: Colors.red),
+                                    onPressed: () {
+                                      _decrementar("banana");
+                                    },
+                                  ),
+                                  Text('$_countBanana'),
+                                  IconButton(
+                                    icon: Icon(Icons.add_circle,
+                                        color: Colors.green),
+                                    onPressed: () {
+                                      _incrementar("banana");
+                                    },
+                                  ),
+                                  Text(
+                                    "  BANANA",
+                                    style: estilo,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(right: 10),
+                              child: Row(
+                                children: [
+                                  Text(r" R$ 4,00",
+                                      style: TextStyle(
+                                          color: Colors.purple,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold))
+                                ],
+                              ),
+                            ),
+                          ]),
                       const Divider(
                         height: 10,
                         thickness: 2,
                         color: Colors.black,
                       ),
-                      Row(children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.remove_circle_outline,
-                              color: Colors.red),
-                          onPressed: () {
-                            _decrementar("pacoca");
-                          },
-                        ),
-                        Text('$_countPacoca'),
-                        IconButton(
-                          icon: Icon(Icons.add_circle, color: Colors.green),
-                          onPressed: () {
-                            _incrementar("pacoca");
-                          },
-                        ),
-                        Text(
-                          "  MORANGO",
-                          style: estilo,
-                        ),
-                      ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    icon: Icon(Icons.remove_circle_outline,
+                                        color: Colors.red),
+                                    onPressed: () {
+                                      _decrementar("morangos");
+                                    },
+                                  ),
+                                  Text('$_countMorangos'),
+                                  IconButton(
+                                    icon: Icon(Icons.add_circle,
+                                        color: Colors.green),
+                                    onPressed: () {
+                                      _incrementar("morangos");
+                                    },
+                                  ),
+                                  Text(
+                                    "  MORANGO",
+                                    style: estilo,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(right: 10),
+                              child: Row(
+                                children: [
+                                  Text(r" R$ 4,00",
+                                      style: TextStyle(
+                                          color: Colors.purple,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold))
+                                ],
+                              ),
+                            ),
+                          ]),
                       const Divider(
                         height: 10,
                         thickness: 2,
                         color: Colors.black,
                       ),
-                      Row(children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.remove_circle_outline,
-                              color: Colors.red),
-                          onPressed: () {
-                            _decrementar("fruitrings");
-                          },
-                        ),
-                        Text('$_countFruitRings'),
-                        IconButton(
-                          icon: Icon(Icons.add_circle, color: Colors.green),
-                          onPressed: () {
-                            _incrementar("fruitrings");
-                          },
-                        ),
-                        Text(
-                          "  KIWI",
-                          style: estilo,
-                        ),
-                      ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    icon: Icon(Icons.remove_circle_outline,
+                                        color: Colors.red),
+                                    onPressed: () {
+                                      _decrementar("kiwi");
+                                    },
+                                  ),
+                                  Text('$_countKiwi'),
+                                  IconButton(
+                                    icon: Icon(Icons.add_circle,
+                                        color: Colors.green),
+                                    onPressed: () {
+                                      _incrementar("kiwi");
+                                    },
+                                  ),
+                                  Text(
+                                    "  KIWI",
+                                    style: estilo,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(right: 10),
+                              child: Row(
+                                children: [
+                                  Text(r" R$ 4,00",
+                                      style: TextStyle(
+                                          color: Colors.purple,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold))
+                                ],
+                              ),
+                            ),
+                          ]),
                       const Divider(
                         height: 10,
                         thickness: 2,
                         color: Colors.black,
                       ),
-                      Row(children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.remove_circle_outline,
-                              color: Colors.red),
-                          onPressed: () {
-                            _decrementar("sucrilhos");
-                          },
-                        ),
-                        Text('$_countSucrilhos'),
-                        IconButton(
-                          icon: Icon(Icons.add_circle, color: Colors.green),
-                          onPressed: () {
-                            _incrementar("sucrilhos");
-                          },
-                        ),
-                        Text(
-                          "  UVA",
-                          style: estilo,
-                        ),
-                      ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    icon: Icon(Icons.remove_circle_outline,
+                                        color: Colors.red),
+                                    onPressed: () {
+                                      _decrementar("uva");
+                                    },
+                                  ),
+                                  Text('$_countUva'),
+                                  IconButton(
+                                    icon: Icon(Icons.add_circle,
+                                        color: Colors.green),
+                                    onPressed: () {
+                                      _incrementar("uva");
+                                    },
+                                  ),
+                                  Text(
+                                    "  UVA",
+                                    style: estilo,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(right: 10),
+                              child: Row(
+                                children: [
+                                  Text(r" R$ 4,00",
+                                      style: TextStyle(
+                                          color: Colors.purple,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold))
+                                ],
+                              ),
+                            ),
+                          ]),
                       const Divider(
                         height: 10,
                         thickness: 2,
                         color: Colors.black,
                       ),
-                      Row(children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.remove_circle_outline,
-                              color: Colors.red),
-                          onPressed: () {
-                            _decrementar("flocosarroz");
-                          },
-                        ),
-                        Text('$_countFlocoArroz'),
-                        IconButton(
-                          icon: Icon(Icons.add_circle, color: Colors.green),
-                          onPressed: () {
-                            _incrementar("flocosarroz");
-                          },
-                        ),
-                        Text(
-                          "  MANGA",
-                          style: estilo,
-                        ),
-                      ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    icon: Icon(Icons.remove_circle_outline,
+                                        color: Colors.red),
+                                    onPressed: () {
+                                      _decrementar("manga");
+                                    },
+                                  ),
+                                  Text('$_countManga'),
+                                  IconButton(
+                                    icon: Icon(Icons.add_circle,
+                                        color: Colors.green),
+                                    onPressed: () {
+                                      _incrementar("manga");
+                                    },
+                                  ),
+                                  Text(
+                                    "  MANGA",
+                                    style: estilo,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(right: 10),
+                              child: Row(
+                                children: [
+                                  Text(r" R$ 4,00",
+                                      style: TextStyle(
+                                          color: Colors.purple,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold))
+                                ],
+                              ),
+                            ),
+                          ]),
                       const Divider(
                         height: 10,
                         thickness: 2,
                         color: Colors.black,
                       ),
-                      Row(children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.remove_circle_outline,
-                              color: Colors.red),
-                          onPressed: () {
-                            _decrementar("flocostapioca");
-                          },
-                        ),
-                        Text('$_countFlocoTapioca'),
-                        IconButton(
-                          icon: Icon(Icons.add_circle, color: Colors.green),
-                          onPressed: () {
-                            _incrementar("flocostapioca");
-                          },
-                        ),
-                        Text(
-                          "  PESSEGO",
-                          style: estilo,
-                        ),
-                      ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    icon: Icon(Icons.remove_circle_outline,
+                                        color: Colors.red),
+                                    onPressed: () {
+                                      _decrementar("pessego");
+                                    },
+                                  ),
+                                  Text('$_countPessego'),
+                                  IconButton(
+                                    icon: Icon(Icons.add_circle,
+                                        color: Colors.green),
+                                    onPressed: () {
+                                      _incrementar("pessego");
+                                    },
+                                  ),
+                                  Text(
+                                    "  PESSEGO",
+                                    style: estilo,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(right: 10),
+                              child: Row(
+                                children: [
+                                  Text(r" R$ 4,00",
+                                      style: TextStyle(
+                                          color: Colors.purple,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold))
+                                ],
+                              ),
+                            ),
+                          ]),
                       const Divider(
                         height: 10,
                         thickness: 2,
@@ -429,8 +697,14 @@ class _CaldaFrutaState extends State<CaldaFruta> {
               ),
               TextButton(
                 style: flatButtonStyle,
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ConfirmaPedido())),
+                onPressed: () async {
+                  await _verificaSelecionadoCalda();
+                  await _verificaSelecionadoFrutas();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ConfirmaPedido()));
+                },
                 child: Row(
                   children: [
                     Text(

@@ -5,6 +5,7 @@ import 'package:appacai/informacoes/formas_pagamento.dart';
 import 'package:appacai/informacoes/taxa_entrega.dart';
 import 'package:appacai/pedidos/acompanhamento_pedido.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Catalogo extends StatefulWidget {
   @override
@@ -51,6 +52,11 @@ class _CatalogoState extends State<Catalogo> {
         list = chave.values.toList();
       });
     });
+  }
+
+  _salvarPedido(String categoria, String descricao, String preco) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("pedido", categoria);
   }
 
   @override
@@ -341,9 +347,10 @@ class _CatalogoState extends State<Catalogo> {
                           for (var i in list)
                             GestureDetector(
                               onTap: () {
-                                print(i['categoria'].toString());
-                                print(i['descricao'].toString());
-                                print(i['preco'].toString());
+                                _salvarPedido(
+                                    i['categoria'].toString(),
+                                    i['descricao'].toString(),
+                                    i['preco'].toString());
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -376,9 +383,30 @@ class _CatalogoState extends State<Catalogo> {
                                             ),
                                             Column(
                                               children: <Widget>[
-                                                Text(i['categoria'].toString()),
-                                                Text(i['descricao'].toString()),
-                                                Text(i['preco'].toString())
+                                                Text(
+                                                  i['categoria'].toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 17,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  i['descricao'].toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.purple,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  i['preco'].toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.green,
+                                                      fontSize: 17,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )
                                               ],
                                             ),
                                           ],
